@@ -4,7 +4,6 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -37,8 +36,8 @@ public class EntryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_entry);
         ActivityManager.addActivity(EntryActivity.this);
-        setContentView(R.layout.entry);
 
         //检查并申请权限
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
@@ -54,7 +53,7 @@ public class EntryActivity extends AppCompatActivity {
         db = sqLiteHelper.getWritableDatabase();
 
         Global.encryptor = sqLiteHelper.queryEncryptor(db);
-        Log.v("数据库中的密码：", Global.encryptor);
+        //Log.v("数据库中的密码：", Global.encryptor);
 
         final TextView tvPwd1 = findViewById(R.id.pwd1);
         Button btOk = findViewById(R.id.btOK), btCancel = findViewById(R.id.btCancel);
@@ -89,7 +88,7 @@ public class EntryActivity extends AppCompatActivity {
 
 
 
-        if(sqLiteHelper.queryEncryptor(db).equals(""))
+        if(Global.encryptor.equals(""))
             startActivity(new Intent(EntryActivity.this, EntrySetEncryptorActivity.class));
 
 

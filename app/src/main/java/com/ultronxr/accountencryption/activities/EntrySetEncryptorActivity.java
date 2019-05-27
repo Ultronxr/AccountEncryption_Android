@@ -2,7 +2,6 @@ package com.ultronxr.accountencryption.activities;
 
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.ColorSpace;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +13,7 @@ import android.widget.Toast;
 
 import com.ultronxr.accountencryption.R;
 import com.ultronxr.accountencryption.activitymanager.ActivityManager;
+import com.ultronxr.accountencryption.global.Global;
 import com.ultronxr.accountencryption.utils.MD5Hash;
 import com.ultronxr.accountencryption.utils.db.SQLiteHelper;
 import com.ultronxr.accountencryption.utils.db.bean.Encryptor;
@@ -28,9 +28,9 @@ public class EntrySetEncryptorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityManager.addActivity(EntrySetEncryptorActivity.this);
-        setContentView(R.layout.entry_set_encryptor);
+        setContentView(R.layout.activity_entry_set_encryptor);
 
+        ActivityManager.addActivity(EntrySetEncryptorActivity.this);
         sqLiteHelper = new SQLiteHelper(getApplicationContext());
         db = sqLiteHelper.getWritableDatabase();
 
@@ -56,6 +56,7 @@ public class EntrySetEncryptorActivity extends AppCompatActivity {
                     Toast.makeText(EntrySetEncryptorActivity.this, msg, Toast.LENGTH_SHORT).show();
                 else{
                     sqLiteHelper.replaceEncryptor(db, new Encryptor(MD5Hash.stringToMd5LowerCase(pwd1)));
+                    Global.encryptor = MD5Hash.stringToMd5LowerCase(pwd1);
                     Intent mainIntent = new Intent(EntrySetEncryptorActivity.this, MainActivity.class);
                     startActivity(mainIntent);
                 }

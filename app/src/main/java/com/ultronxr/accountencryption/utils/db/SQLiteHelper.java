@@ -100,16 +100,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.replace("encryptor", null, contentValues);
     }
 
-    public void deleteEncryptor(SQLiteDatabase db){
-        db.delete("encryptor", null, null);
-    }
-
-    public void countEncryptor(SQLiteDatabase db){
-        String sql = "SELECT COUNT(*) FROM encryptor;";
-
-
-    }
-
     public String queryEncryptor(SQLiteDatabase db){
         String encryptor = "";
 
