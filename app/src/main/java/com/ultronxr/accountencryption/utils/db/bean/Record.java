@@ -5,6 +5,7 @@ public class Record {
     private int id;                   //ID
     private String create_time;       //创建时间
     private String last_modify_time;  //最后修改时间
+    private String category;          //分类
     private String account_name;      //账户名称
     private String account_num;       //账号
     private String account_pwd;       //密码
@@ -20,8 +21,9 @@ public class Record {
     public Record() {
     }
 
-    public Record(String last_modify_time, String account_name, String account_num, String account_pwd, String nick, String email, String phone, String url, String security_problem, String security_answer, String note) {
+    public Record(String last_modify_time, String category, String account_name, String account_num, String account_pwd, String nick, String email, String phone, String url, String security_problem, String security_answer, String note) {
         this.last_modify_time = last_modify_time;
+        this.category = category;
         this.account_name = account_name;
         this.account_num = account_num;
         this.account_pwd = account_pwd;
@@ -34,10 +36,11 @@ public class Record {
         this.note = note;
     }
 
-    public Record(int id, String create_time, String last_modify_time, String account_name, String account_num, String account_pwd, String nick, String email, String phone, String url, String security_problem, String security_answer, String note) {
+    public Record(int id, String create_time, String last_modify_time, String category, String account_name, String account_num, String account_pwd, String nick, String email, String phone, String url, String security_problem, String security_answer, String note) {
         this.id = id;
         this.create_time = create_time;
         this.last_modify_time = last_modify_time;
+        this.category = category;
         this.account_name = account_name;
         this.account_num = account_num;
         this.account_pwd = account_pwd;
@@ -56,6 +59,14 @@ public class Record {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getCreate_time() {

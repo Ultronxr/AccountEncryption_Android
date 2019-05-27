@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 
 
 import com.ultronxr.accountencryption.utils.MD5Hash;
@@ -19,8 +20,8 @@ import java.util.List;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "PwdEncryptionDB.db";
-    private static final String DB_PATH = "/storage/emulated/0/com.ultronxr.accountencryption/db/";
+    private static final String DB_NAME = "AccountEncryptionDB.db";
+    private static final String DB_PATH = "/storage/emulated/0/Android/data/com.ultronxr.accountencryption/db/";
     //private static final String DB_PATH = "/data/data/com.ultronxr.accountencryption/db/";
     private static final int DB_VERSION = 1;
 
@@ -36,6 +37,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "create_time datetime default(datetime('now', 'localtime')) NOT NULL," +
                 "last_modify_time datetime default(datetime('now', 'localtime')) NOT NULL," +
+                "category VARCHAR(500)," +
                 "account_name VARCHAR(500)," +
                 "account_num VARCHAR(500)," +
                 "account_pwd VARCHAR(500)," +
@@ -71,7 +73,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     private ContentValues setEncryptorToContentValues(Encryptor encryptor){
         ContentValues contentValues = new ContentValues();
-        contentValues.put("pwd", MD5Hash.stringToMd5LowerCase(encryptor.getPwd())); //MD5加密
+        contentValues.put("pwd", encryptor.getPwd());
         contentValues.put("last_modify_time", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         return contentValues;
     }
@@ -79,16 +81,17 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     private ContentValues setRecordsToContentValues(Record record){
         ContentValues contentValues = new ContentValues();
         contentValues.put("last_modify_time", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        contentValues.put("category", record.getCategory());
         contentValues.put("account_name", record.getAccount_name());
-        contentValues.put("account_num", AES128ECBPKCS5.encryptString(record.getAccount_num())); //AES加密
-        contentValues.put("account_pwd", AES128ECBPKCS5.encryptString(record.getAccount_pwd()));
-        contentValues.put("nick", AES128ECBPKCS5.encryptString(record.getNick()));
-        contentValues.put("email", AES128ECBPKCS5.encryptString(record.getEmail()));
-        contentValues.put("phone", AES128ECBPKCS5.encryptString(record.getPhone()));
-        contentValues.put("url", AES128ECBPKCS5.encryptString(record.getUrl()));
-        contentValues.put("security_problem", AES128ECBPKCS5.encryptString(record.getSecurity_problem()) );
-        contentValues.put("security_answer", AES128ECBPKCS5.encryptString(record.getSecurity_answer()));
-        contentValues.put("note", AES128ECBPKCS5.encryptString(record.getNote()));
+        contentValues.put("account_num", record.getAccount_num());
+        contentValues.put("account_pwd", record.getAccount_pwd());
+        contentValues.put("nick", record.getNick());
+        contentValues.put("email", record.getEmail());
+        contentValues.put("phone", record.getPhone());
+        contentValues.put("url", record.getUrl());
+        contentValues.put("security_problem", record.getSecurity_problem());
+        contentValues.put("security_answer", record.getSecurity_answer());
+        contentValues.put("note", record.getNote());
         return contentValues;
     }
 
@@ -110,9 +113,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public String queryEncryptor(SQLiteDatabase db){
         String encryptor = "";
 
-        Cursor cursor = db.query("encryptor", null, null, null, null,null, null,null);
+        Cursor cursor = db.query("encryptor", null, null, null, null, null, null, null);
         if(cursor.moveToNext()){
-            encryptor = cursor.getString(2);
+            encryptor = cursor.getString(1);
         }
         return encryptor;
     }
@@ -145,7 +148,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                             cursor.getString(4), cursor.getString(5), cursor.getString(6),
                             cursor.getString(7), cursor.getString(8), cursor.getString(9),
                             cursor.getString(10), cursor.getString(11), cursor.getString(12),
-                            cursor.getString(13));
+                            cursor.getString(13), cursor.getString(14));
             recordList.add(record);
         }
         return recordList;

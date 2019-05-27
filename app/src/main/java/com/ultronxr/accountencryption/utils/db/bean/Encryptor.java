@@ -10,9 +10,8 @@ public class Encryptor {
     public Encryptor() {
     }
 
-    public Encryptor(String pwd, String last_modify_time) {
+    public Encryptor(String pwd) {
         this.pwd = pwd;
-        this.last_modify_time = last_modify_time;
     }
 
     public Encryptor(int id, String pwd, String create_time, String last_modify_time) {
