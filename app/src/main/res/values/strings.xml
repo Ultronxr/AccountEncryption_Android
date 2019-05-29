@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">AccountEncryption</string>
-    <string name="navigation_drawer_open"></string>
-    <string name="navigation_drawer_close"></string>
+    <string name="navigation_drawer_open">侧边栏打开</string>
+    <string name="navigation_drawer_close">侧边栏关闭</string>
     <string name="nav_header_title"></string>
     <string name="nav_header_subtitle"></string>
     <string name="nav_header_desc"></string>

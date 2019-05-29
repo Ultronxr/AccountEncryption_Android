@@ -44,7 +44,7 @@ public class AES128ECBPKCS5 {
 
         try{ return Base64.getEncoder().encodeToString(cipherForEncrypt.doFinal(strToEncrypt.getBytes("UTF-8"))); }
         catch(Exception e) { e.printStackTrace(); }
-        return null;
+        return "";
     }
 
     /**
@@ -69,7 +69,7 @@ public class AES128ECBPKCS5 {
 
         try{ return new String(cipherForDecrypt.doFinal(Base64.getDecoder().decode(strToDecrypt))); }
         catch (Exception e) { e.printStackTrace(); }
-        return null;
+        return "";
     }
 
     /**

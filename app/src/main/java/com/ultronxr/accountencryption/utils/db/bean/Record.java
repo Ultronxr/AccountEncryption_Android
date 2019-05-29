@@ -1,20 +1,23 @@
 package com.ultronxr.accountencryption.utils.db.bean;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Record {
 
     private int id;                   //ID
-    private String createTime;       //创建时间
-    private String lastModifyTime;  //最后修改时间
+    private String createTime;        //创建时间
+    private String lastModifyTime;    //最后修改时间
     private String category;          //分类
-    private String accountName;      //账户名称
-    private String accountNum;       //账号
-    private String accountPwd;       //密码
+    private String accountName;       //账户名称
+    private String accountNum;        //账号，账号和账号下面的数据存放时都需要加密，读取时都需要解密
+    private String accountPwd;        //密码
     private String nick;              //昵称
     private String email;             //邮箱
     private String phone;             //手机号
     private String url;               //网址
-    private String securityProblem;  //密保问题
-    private String securityAnswer;   //密保问题密码
+    private String securityProblem;   //密保问题
+    private String securityAnswer;    //密保问题密码
     private String note;              //其他
 
 
@@ -23,35 +26,35 @@ public class Record {
 
 
     public Record(String lastModifyTime, String category, String accountName, String accountNum, String accountPwd, String nick, String email, String phone, String url, String securityProblem, String securityAnswer, String note) {
-        this.lastModifyTime = lastModifyTime;
-        this.category = category;
-        this.accountName = accountName;
-        this.accountNum = accountNum;
-        this.accountPwd = accountPwd;
-        this.nick = nick;
-        this.email = email;
-        this.phone = phone;
-        this.url = url;
-        this.securityProblem = securityProblem;
-        this.securityAnswer = securityAnswer;
-        this.note = note;
+        this.lastModifyTime = (lastModifyTime==null) ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) : lastModifyTime;
+        this.category = (category==null) ? "" : category;
+        this.accountName = (accountName==null) ? "" : accountName;
+        this.accountNum = (accountNum==null) ? "" : accountNum;
+        this.accountPwd = (accountPwd==null) ? "" : accountPwd;
+        this.nick = (nick==null) ? "" : nick;
+        this.email = (email==null) ? "" : email;
+        this.phone = (phone==null) ? "" : phone;
+        this.url = (url==null) ? "" : url;
+        this.securityProblem = (securityProblem==null) ? "" : securityProblem;
+        this.securityAnswer = (securityAnswer==null) ? "" : securityAnswer;
+        this.note = (note==null) ? "" : note;
     }
 
     public Record(int id, String createTime, String lastModifyTime, String category, String accountName, String accountNum, String accountPwd, String nick, String email, String phone, String url, String securityProblem, String securityAnswer, String note) {
         this.id = id;
         this.createTime = createTime;
-        this.lastModifyTime = lastModifyTime;
-        this.category = category;
-        this.accountName = accountName;
-        this.accountNum = accountNum;
-        this.accountPwd = accountPwd;
-        this.nick = nick;
-        this.email = email;
-        this.phone = phone;
-        this.url = url;
-        this.securityProblem = securityProblem;
-        this.securityAnswer = securityAnswer;
-        this.note = note;
+        this.lastModifyTime = (lastModifyTime==null) ? new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) : lastModifyTime;
+        this.category = (category==null) ? "" : category;
+        this.accountName = (accountName==null) ? "" : accountName;
+        this.accountNum = (accountNum==null) ? "" : accountNum;
+        this.accountPwd = (accountPwd==null) ? "" : accountPwd;
+        this.nick = (nick==null) ? "" : nick;
+        this.email = (email==null) ? "" : email;
+        this.phone = (phone==null) ? "" : phone;
+        this.url = (url==null) ? "" : url;
+        this.securityProblem = (securityProblem==null) ? "" : securityProblem;
+        this.securityAnswer = (securityAnswer==null) ? "" : securityAnswer;
+        this.note = (note==null) ? "" : note;
     }
 
     public int getId() {
@@ -164,5 +167,25 @@ public class Record {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    @Override
+    public String toString() {
+        return "Record{" +
+                "id=" + id +
+                ", createTime='" + createTime + '\'' +
+                ", lastModifyTime='" + lastModifyTime + '\'' +
+                ", category='" + category + '\'' +
+                ", accountName='" + accountName + '\'' +
+                ", accountNum='" + accountNum + '\'' +
+                ", accountPwd='" + accountPwd + '\'' +
+                ", nick='" + nick + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", url='" + url + '\'' +
+                ", securityProblem='" + securityProblem + '\'' +
+                ", securityAnswer='" + securityAnswer + '\'' +
+                ", note='" + note + '\'' +
+                '}';
     }
 }

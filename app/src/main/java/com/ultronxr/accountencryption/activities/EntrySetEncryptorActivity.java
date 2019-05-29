@@ -18,6 +18,7 @@ import com.ultronxr.accountencryption.global.Global;
 import com.ultronxr.accountencryption.utils.MD5Hash;
 import com.ultronxr.accountencryption.utils.db.SQLiteHelper;
 import com.ultronxr.accountencryption.utils.db.bean.Encryptor;
+import com.ultronxr.accountencryption.utils.encrypt.AES128ECBPKCS5;
 
 import java.util.regex.Pattern;
 
@@ -58,6 +59,7 @@ public class EntrySetEncryptorActivity extends AppCompatActivity {
                 else{
                     sqLiteHelper.replaceEncryptor(db, new Encryptor(MD5Hash.stringToMd5LowerCase(pwd1)));
                     Global.encryptor = MD5Hash.stringToMd5LowerCase(pwd1);
+                    AES128ECBPKCS5.setSecretKey(Global.encryptor);
                     Intent mainIntent = new Intent(EntrySetEncryptorActivity.this, MainActivity.class);
                     startActivity(mainIntent);
                 }

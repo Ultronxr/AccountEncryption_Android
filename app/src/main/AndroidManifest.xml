@@ -11,7 +11,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.ListItemActivity"></activity>
         <activity android:name=".activities.EntrySetEncryptorActivity" />
         <activity android:name=".activities.EntryActivity">
             <intent-filter>

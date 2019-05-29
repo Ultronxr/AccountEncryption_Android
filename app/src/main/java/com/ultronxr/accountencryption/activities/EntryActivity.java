@@ -25,6 +25,7 @@ import com.ultronxr.accountencryption.activitymanager.ActivityManager;
 import com.ultronxr.accountencryption.global.Global;
 import com.ultronxr.accountencryption.utils.MD5Hash;
 import com.ultronxr.accountencryption.utils.db.SQLiteHelper;
+import com.ultronxr.accountencryption.utils.encrypt.AES128ECBPKCS5;
 
 import java.io.File;
 import java.util.regex.Pattern;
@@ -77,6 +78,7 @@ public class EntryActivity extends AppCompatActivity {
                 if(!msg.equals(""))
                     Toast.makeText(EntryActivity.this, msg, Toast.LENGTH_SHORT).show();
                 else {
+                    AES128ECBPKCS5.setSecretKey(Global.encryptor);
                     Intent mainIntent = new Intent(EntryActivity.this, MainActivity.class);
                     startActivity(mainIntent);
                 }

@@ -28,7 +28,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_TABLE_ENCRYPTOR =
             "CREATE TABLE IF NOT EXISTS encryptor (" +
                     "id INTEGER PRIMARY KEY," +
-                    "pwd VARCHAR(500) NOT NULL," +
+                    "pwd TEXT NOT NULL," +
                     "createTime datetime default(datetime('now', 'localtime')) NOT NULL," +
                     "lastModifyTime datetime default(datetime('now', 'localtime')) NOT NULL" +
             ");";
@@ -37,16 +37,16 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "createTime datetime default(datetime('now', 'localtime')) NOT NULL," +
                 "lastModifyTime datetime default(datetime('now', 'localtime')) NOT NULL," +
-                "category VARCHAR(500)," +
-                "accountName VARCHAR(500)," +
-                "accountNum VARCHAR(500)," +
-                "accountPwd VARCHAR(500)," +
-                "nick VARCHAR(500)," +
-                "email VARCHAR(500)," +
-                "phone VARCHAR(500)," +
-                "url VARCHAR(500)," +
-                "securityProblem VARCHAR(500)," +
-                "securityAnswer VARCHAR(500)," +
+                "category TEXT," +
+                "accountName TEXT," +
+                "accountNum TEXT," +
+                "accountPwd TEXT," +
+                "nick TEXT," +
+                "email TEXT," +
+                "phone TEXT," +
+                "url TEXT," +
+                "securityProblem TEXT," +
+                "securityAnswer TEXT," +
                 "note TEXT" +
             ");";
 
@@ -115,8 +115,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.insert("record", null, contentValues);
     }
 
-    public void deleteRecord(SQLiteDatabase db, Record record){
-        db.delete("record", "id=?", new String[]{String.valueOf(record.getId())});
+    public void deleteRecord(SQLiteDatabase db, int id){
+        db.delete("record", "id=?", new String[]{String.valueOf(id)});
     }
 
     public void updateRecord(SQLiteDatabase db, Record record){

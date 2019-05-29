@@ -52,4 +52,14 @@ public class Encryptor {
     public void setLastModifyTime(String lastModifyTime) {
         this.lastModifyTime = lastModifyTime;
     }
+
+    @Override
+    public String toString() {
+        return "Encryptor{" +
+                "id=" + id +
+                ", pwd='" + pwd + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", lastModifyTime='" + lastModifyTime + '\'' +
+                '}';
+    }
 }
