@@ -1,3 +1,4 @@
-/build
+/build/
+/release/
 app.iml
 proguard-rules.pro
