@@ -4,8 +4,8 @@ public class Encryptor {
 
     private int id;
     private String pwd;
-    private String create_time;
-    private String last_modify_time;
+    private String createTime;
+    private String lastModifyTime;
 
     public Encryptor() {
     }
@@ -14,11 +14,11 @@ public class Encryptor {
         this.pwd = pwd;
     }
 
-    public Encryptor(int id, String pwd, String create_time, String last_modify_time) {
+    public Encryptor(int id, String pwd, String createTime, String lastModifyTime) {
         this.id = id;
         this.pwd = pwd;
-        this.create_time = create_time;
-        this.last_modify_time = last_modify_time;
+        this.createTime = createTime;
+        this.lastModifyTime = lastModifyTime;
     }
 
     public int getId() {
@@ -37,19 +37,19 @@ public class Encryptor {
         this.pwd = pwd;
     }
 
-    public String getCreate_time() {
-        return create_time;
+    public String getCreateTime() {
+        return createTime;
     }
 
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
-    public String getLast_modify_time() {
-        return last_modify_time;
+    public String getLastModifyTime() {
+        return lastModifyTime;
     }
 
-    public void setLast_modify_time(String last_modify_time) {
-        this.last_modify_time = last_modify_time;
+    public void setLastModifyTime(String lastModifyTime) {
+        this.lastModifyTime = lastModifyTime;
     }
 }

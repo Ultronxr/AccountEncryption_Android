@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="#FAF7F7">
+
+
+    <EditText
+        android:id="@+id/add_account_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:hint="账户名称"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/add_category"
+        android:layout_width="104dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="260dp"
+        android:layout_marginTop="25dp"
+        android:ems="10"
+        android:hint="类别"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/add_account_num"
+        android:layout_width="339dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="85dp"
+        android:ems="10"
+        android:hint="账号"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/add_account_pwd"
+        android:layout_width="339dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="145dp"
+        android:ems="10"
+        android:hint="密码"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/add_nick"
+        android:layout_width="339dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="205dp"
+        android:ems="10"
+        android:hint="昵称"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/add_email"
+        android:layout_width="339dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="265dp"
+        android:ems="10"
+        android:hint="邮箱"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/add_phone"
+        android:layout_width="339dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="325dp"
+        android:ems="10"
+        android:hint="手机号"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/add_url"
+        android:layout_width="339dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="385dp"
+        android:ems="10"
+        android:hint="网站"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/add_security_problem"
+        android:layout_width="339dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="445dp"
+        android:ems="10"
+        android:hint="密保问题"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/add_security_answer"
+        android:layout_width="339dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="505dp"
+        android:ems="10"
+        android:hint="密保问题答案"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/add_note"
+        android:layout_width="334dp"
+        android:layout_height="84dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="565dp"
+        android:ems="10"
+        android:hint="其他"
+        android:inputType="textMultiLine" />
+
+
+
+</RelativeLayout>

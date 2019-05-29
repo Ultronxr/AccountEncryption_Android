@@ -29,24 +29,24 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             "CREATE TABLE IF NOT EXISTS encryptor (" +
                     "id INTEGER PRIMARY KEY," +
                     "pwd VARCHAR(500) NOT NULL," +
-                    "create_time datetime default(datetime('now', 'localtime')) NOT NULL," +
-                    "last_modify_time datetime default(datetime('now', 'localtime')) NOT NULL" +
+                    "createTime datetime default(datetime('now', 'localtime')) NOT NULL," +
+                    "lastModifyTime datetime default(datetime('now', 'localtime')) NOT NULL" +
             ");";
-    private static final String SQL_CREATE_TABLE_RECORDS =
-            "CREATE TABLE IF NOT EXISTS records (" +
+    private static final String SQL_CREATE_TABLE_Record =
+            "CREATE TABLE IF NOT EXISTS record (" +
                 "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "create_time datetime default(datetime('now', 'localtime')) NOT NULL," +
-                "last_modify_time datetime default(datetime('now', 'localtime')) NOT NULL," +
+                "createTime datetime default(datetime('now', 'localtime')) NOT NULL," +
+                "lastModifyTime datetime default(datetime('now', 'localtime')) NOT NULL," +
                 "category VARCHAR(500)," +
-                "account_name VARCHAR(500)," +
-                "account_num VARCHAR(500)," +
-                "account_pwd VARCHAR(500)," +
+                "accountName VARCHAR(500)," +
+                "accountNum VARCHAR(500)," +
+                "accountPwd VARCHAR(500)," +
                 "nick VARCHAR(500)," +
                 "email VARCHAR(500)," +
                 "phone VARCHAR(500)," +
                 "url VARCHAR(500)," +
-                "security_problem VARCHAR(500)," +
-                "security_answer VARCHAR(500)," +
+                "securityProblem VARCHAR(500)," +
+                "securityAnswer VARCHAR(500)," +
                 "note TEXT" +
             ");";
 
@@ -57,7 +57,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_TABLE_ENCRYPTOR);
-        db.execSQL(SQL_CREATE_TABLE_RECORDS);
+        db.execSQL(SQL_CREATE_TABLE_Record);
     }
 
     @Override
@@ -74,23 +74,23 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     private ContentValues setEncryptorToContentValues(Encryptor encryptor){
         ContentValues contentValues = new ContentValues();
         contentValues.put("pwd", encryptor.getPwd());
-        contentValues.put("last_modify_time", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        contentValues.put("lastModifyTime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         return contentValues;
     }
 
-    private ContentValues setRecordsToContentValues(Record record){
+    private ContentValues setRecordToContentValues(Record record){
         ContentValues contentValues = new ContentValues();
-        contentValues.put("last_modify_time", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        contentValues.put("lastModifyTime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         contentValues.put("category", record.getCategory());
-        contentValues.put("account_name", record.getAccount_name());
-        contentValues.put("account_num", record.getAccount_num());
-        contentValues.put("account_pwd", record.getAccount_pwd());
+        contentValues.put("accountName", record.getAccountName());
+        contentValues.put("accountNum", record.getAccountNum());
+        contentValues.put("accountPwd", record.getAccountPwd());
         contentValues.put("nick", record.getNick());
         contentValues.put("email", record.getEmail());
         contentValues.put("phone", record.getPhone());
         contentValues.put("url", record.getUrl());
-        contentValues.put("security_problem", record.getSecurity_problem());
-        contentValues.put("security_answer", record.getSecurity_answer());
+        contentValues.put("securityProblem", record.getSecurityProblem());
+        contentValues.put("securityAnswer", record.getSecurityAnswer());
         contentValues.put("note", record.getNote());
         return contentValues;
     }
@@ -110,35 +110,35 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         return encryptor;
     }
 
-    public void insertRecords(SQLiteDatabase db, Record record){
-        ContentValues contentValues = setRecordsToContentValues(record);
+    public void insertRecord(SQLiteDatabase db, Record record){
+        ContentValues contentValues = setRecordToContentValues(record);
         db.insert("record", null, contentValues);
     }
 
-    public void deleteRecords(SQLiteDatabase db, Record record){
+    public void deleteRecord(SQLiteDatabase db, Record record){
         db.delete("record", "id=?", new String[]{String.valueOf(record.getId())});
     }
 
-    public void updateRecords(SQLiteDatabase db, Record record){
-        ContentValues contentValues = setRecordsToContentValues(record);
+    public void updateRecord(SQLiteDatabase db, Record record){
+        ContentValues contentValues = setRecordToContentValues(record);
         db.update("record", contentValues, "id=?", new String[]{String.valueOf(record.getId())});
     }
 
-    public List<Record> queryRecords(SQLiteDatabase db, String account_name){
+    public List<Record> queryRecord(SQLiteDatabase db, String accountName){
         List<Record> recordList = new ArrayList<>();
         Cursor cursor;
-        if(account_name == null)
-            cursor = db.query("records", null, null, null, null,null, null,null);
+        if(accountName == null)
+            cursor = db.query("record", null, null, null, null,null, null,null);
         else
-            cursor = db.query("records", null, null, null, null,null, null,null);
+            cursor = db.query("record", null, null, null, null,null, null,null);
 
         while(cursor.moveToNext()){
             Record record =
-                    new Record(cursor.getInt(1), cursor.getString(2), cursor.getString(3),
-                            cursor.getString(4), cursor.getString(5), cursor.getString(6),
-                            cursor.getString(7), cursor.getString(8), cursor.getString(9),
-                            cursor.getString(10), cursor.getString(11), cursor.getString(12),
-                            cursor.getString(13), cursor.getString(14));
+                    new Record(cursor.getInt(0), cursor.getString(1), cursor.getString(2),
+                            cursor.getString(3), cursor.getString(4), cursor.getString(5),
+                            cursor.getString(6), cursor.getString(7), cursor.getString(8),
+                            cursor.getString(9), cursor.getString(10), cursor.getString(11),
+                            cursor.getString(12), cursor.getString(13));
             recordList.add(record);
         }
         return recordList;

@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,13 +35,13 @@ public class EntrySetEncryptorActivity extends AppCompatActivity {
         sqLiteHelper = new SQLiteHelper(getApplicationContext());
         db = sqLiteHelper.getWritableDatabase();
 
-        final TextView tvPwd1 = findViewById(R.id.pwd1), tvPwd2 = findViewById(R.id.pwd2);
+        final EditText etPwd1 = findViewById(R.id.pwd1), etPwd2 = findViewById(R.id.pwd2);
         Button btOk = findViewById(R.id.btOK), btCancel = findViewById(R.id.btCancel);
 
         btOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String pwd1 = tvPwd1.getText().toString(), pwd2 = tvPwd2.getText().toString();
+                String pwd1 = etPwd1.getText().toString(), pwd2 = etPwd2.getText().toString();
                 String msg = "";
 
                 if(pwd1.equals(""))

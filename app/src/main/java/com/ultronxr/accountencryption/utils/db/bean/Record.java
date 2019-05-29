@@ -3,53 +3,54 @@ package com.ultronxr.accountencryption.utils.db.bean;
 public class Record {
 
     private int id;                   //ID
-    private String create_time;       //创建时间
-    private String last_modify_time;  //最后修改时间
+    private String createTime;       //创建时间
+    private String lastModifyTime;  //最后修改时间
     private String category;          //分类
-    private String account_name;      //账户名称
-    private String account_num;       //账号
-    private String account_pwd;       //密码
+    private String accountName;      //账户名称
+    private String accountNum;       //账号
+    private String accountPwd;       //密码
     private String nick;              //昵称
     private String email;             //邮箱
     private String phone;             //手机号
     private String url;               //网址
-    private String security_problem;  //密保问题
-    private String security_answer;   //密保问题密码
+    private String securityProblem;  //密保问题
+    private String securityAnswer;   //密保问题密码
     private String note;              //其他
 
 
     public Record() {
     }
 
-    public Record(String last_modify_time, String category, String account_name, String account_num, String account_pwd, String nick, String email, String phone, String url, String security_problem, String security_answer, String note) {
-        this.last_modify_time = last_modify_time;
+
+    public Record(String lastModifyTime, String category, String accountName, String accountNum, String accountPwd, String nick, String email, String phone, String url, String securityProblem, String securityAnswer, String note) {
+        this.lastModifyTime = lastModifyTime;
         this.category = category;
-        this.account_name = account_name;
-        this.account_num = account_num;
-        this.account_pwd = account_pwd;
+        this.accountName = accountName;
+        this.accountNum = accountNum;
+        this.accountPwd = accountPwd;
         this.nick = nick;
         this.email = email;
         this.phone = phone;
         this.url = url;
-        this.security_problem = security_problem;
-        this.security_answer = security_answer;
+        this.securityProblem = securityProblem;
+        this.securityAnswer = securityAnswer;
         this.note = note;
     }
 
-    public Record(int id, String create_time, String last_modify_time, String category, String account_name, String account_num, String account_pwd, String nick, String email, String phone, String url, String security_problem, String security_answer, String note) {
+    public Record(int id, String createTime, String lastModifyTime, String category, String accountName, String accountNum, String accountPwd, String nick, String email, String phone, String url, String securityProblem, String securityAnswer, String note) {
         this.id = id;
-        this.create_time = create_time;
-        this.last_modify_time = last_modify_time;
+        this.createTime = createTime;
+        this.lastModifyTime = lastModifyTime;
         this.category = category;
-        this.account_name = account_name;
-        this.account_num = account_num;
-        this.account_pwd = account_pwd;
+        this.accountName = accountName;
+        this.accountNum = accountNum;
+        this.accountPwd = accountPwd;
         this.nick = nick;
         this.email = email;
         this.phone = phone;
         this.url = url;
-        this.security_problem = security_problem;
-        this.security_answer = security_answer;
+        this.securityProblem = securityProblem;
+        this.securityAnswer = securityAnswer;
         this.note = note;
     }
 
@@ -61,6 +62,22 @@ public class Record {
         this.id = id;
     }
 
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getLastModifyTime() {
+        return lastModifyTime;
+    }
+
+    public void setLastModifyTime(String lastModifyTime) {
+        this.lastModifyTime = lastModifyTime;
+    }
+
     public String getCategory() {
         return category;
     }
@@ -69,44 +86,28 @@ public class Record {
         this.category = category;
     }
 
-    public String getCreate_time() {
-        return create_time;
+    public String getAccountName() {
+        return accountName;
     }
 
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
+    public void setAccountName(String accountName) {
+        this.accountName = accountName;
     }
 
-    public String getLast_modify_time() {
-        return last_modify_time;
+    public String getAccountNum() {
+        return accountNum;
     }
 
-    public void setLast_modify_time(String last_modify_time) {
-        this.last_modify_time = last_modify_time;
+    public void setAccountNum(String accountNum) {
+        this.accountNum = accountNum;
     }
 
-    public String getAccount_name() {
-        return account_name;
+    public String getAccountPwd() {
+        return accountPwd;
     }
 
-    public void setAccount_name(String account_name) {
-        this.account_name = account_name;
-    }
-
-    public String getAccount_num() {
-        return account_num;
-    }
-
-    public void setAccount_num(String account_num) {
-        this.account_num = account_num;
-    }
-
-    public String getAccount_pwd() {
-        return account_pwd;
-    }
-
-    public void setAccount_pwd(String account_pwd) {
-        this.account_pwd = account_pwd;
+    public void setAccountPwd(String accountPwd) {
+        this.accountPwd = accountPwd;
     }
 
     public String getNick() {
@@ -141,20 +142,20 @@ public class Record {
         this.url = url;
     }
 
-    public String getSecurity_problem() {
-        return security_problem;
+    public String getSecurityProblem() {
+        return securityProblem;
     }
 
-    public void setSecurity_problem(String security_problem) {
-        this.security_problem = security_problem;
+    public void setSecurityProblem(String securityProblem) {
+        this.securityProblem = securityProblem;
     }
 
-    public String getSecurity_answer() {
-        return security_answer;
+    public String getSecurityAnswer() {
+        return securityAnswer;
     }
 
-    public void setSecurity_answer(String security_answer) {
-        this.security_answer = security_answer;
+    public void setSecurityAnswer(String securityAnswer) {
+        this.securityAnswer = securityAnswer;
     }
 
     public String getNote() {

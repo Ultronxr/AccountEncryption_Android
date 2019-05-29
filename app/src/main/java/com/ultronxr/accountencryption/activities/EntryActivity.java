@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,8 @@ public class EntryActivity extends AppCompatActivity {
 
     private SQLiteHelper sqLiteHelper;
     private SQLiteDatabase db;
+
+    private EditText etPwd1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +58,13 @@ public class EntryActivity extends AppCompatActivity {
         Global.encryptor = sqLiteHelper.queryEncryptor(db);
         //Log.v("数据库中的密码：", Global.encryptor);
 
-        final TextView tvPwd1 = findViewById(R.id.pwd1);
+        etPwd1 = findViewById(R.id.pwd1);
         Button btOk = findViewById(R.id.btOK), btCancel = findViewById(R.id.btCancel);
 
         btOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String pwd1 = tvPwd1.getText().toString();
+                String pwd1 = etPwd1.getText().toString();
                 String msg = "";
 
                 if(pwd1.equals(""))
@@ -86,12 +89,8 @@ public class EntryActivity extends AppCompatActivity {
             }
         });
 
-
-
         if(Global.encryptor.equals(""))
             startActivity(new Intent(EntryActivity.this, EntrySetEncryptorActivity.class));
-
-
     }
 
     //ToolBar绑定
