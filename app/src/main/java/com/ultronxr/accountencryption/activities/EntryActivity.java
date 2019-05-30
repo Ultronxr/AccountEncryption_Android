@@ -17,13 +17,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ultronxr.accountencryption.R;
 import com.ultronxr.accountencryption.activitymanager.ActivityManager;
-import com.ultronxr.accountencryption.global.Global;
-import com.ultronxr.accountencryption.utils.MD5Hash;
+import com.ultronxr.accountencryption.utils.encrypt.MD5Hash;
 import com.ultronxr.accountencryption.utils.db.SQLiteHelper;
 import com.ultronxr.accountencryption.utils.encrypt.AES128ECBPKCS5;
 
@@ -78,8 +76,9 @@ public class EntryActivity extends AppCompatActivity {
                 if(!msg.equals(""))
                     Toast.makeText(EntryActivity.this, msg, Toast.LENGTH_SHORT).show();
                 else {
-                    Global.encryptor = pwd1;
+                    //Global.encryptor = pwd1;
                     AES128ECBPKCS5.setSecretKey(pwd1);
+                    //Log.v("当前入口输入的密码",pwd1);
                     Intent mainIntent = new Intent(EntryActivity.this, MainActivity.class);
                     startActivity(mainIntent);
                 }

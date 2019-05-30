@@ -1,13 +1,14 @@
 package com.ultronxr.accountencryption.activities;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,14 +26,17 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ultronxr.accountencryption.R;
 import com.ultronxr.accountencryption.activitymanager.ActivityManager;
 import com.ultronxr.accountencryption.global.Global;
 import com.ultronxr.accountencryption.utils.db.SQLiteHelper;
+import com.ultronxr.accountencryption.utils.db.bean.Encryptor;
 import com.ultronxr.accountencryption.utils.db.bean.Record;
 import com.ultronxr.accountencryption.utils.encrypt.AES128ECBPKCS5;
+import com.ultronxr.accountencryption.utils.encrypt.MD5Hash;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,39 +44,38 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private long exitTime = 0;
     private SQLiteHelper sqLiteHelper;
     private SQLiteDatabase db;
 
-    private ListView listView; //主列表
+    private long exitTime = 0; //主界面第一次点击返回（退出）的计时
     private SimpleAdapter itemAdapter, categoryAdapter; //所有数据列表/搜索数据列表Adapter，分类数据列表Adapter
-    ArrayList<Map<String, Object>> allItemList = new ArrayList<>(), searchItemList = new ArrayList<>(), categoryItemList = new ArrayList<>();
-
-    private SearchView searchView; //搜索框
+    private ArrayList<Map<String, Object>> allItemList = new ArrayList<>(), searchItemList = new ArrayList<>(), categoryItemList = new ArrayList<>();
     private String searchQuery; //搜索内容
-    boolean isSearching = false; //标识是否正在搜索，用来在搜索之后区分allItemList和searchItemList列表
-
-    private LayoutInflater inflater; //设置弹框用的
-
-    private AlertDialog.Builder addDialog; //弹框一：增加记录的弹框
+    private boolean isSearching = false; //标识是否正在搜索，用来在搜索之后区分allItemList和searchItemList列表
+    private int updateIndex = -1; //记录正在修改记录的下标
+    private final String[] longClickMenuItems = new String[]{"显示加密的原数据", "删除"};
     private Map<String, EditText> mapAddEditTexts = new HashMap<>(); //增加记录弹框中的所有EditText控件
     private Map<String, String> mapAddEditTextTexts = new HashMap<>(); //增加记录弹框中的所有EditText控件的文字内容
-    private AlertDialog.Builder updateDialog; //弹框二：修改记录的弹框
     private Map<String, EditText> mapUpdateEditTexts = new HashMap<>();
     private Map<String, String> mapUpdateEditTextTexts = new HashMap<>();
-    private AlertDialog.Builder showEncryptedDialog; //弹框三：显示加密信息的弹框
-
-    private int updateIndex = -1;
-
-    final String[] longClickMenuItems = new String[]{"显示加密的原数据", "删除"};
-    AlertDialog.Builder longClickMenu; //长按某一项记录的弹框
-    AlertDialog.Builder deleteEnsureMenu; //提示是否确认删除的弹框
-
     private List<String> drawerItemList = new ArrayList<>(); //侧边栏中显示的所有分类名称
+
+    private ListView listView; //主列表
+    private SearchView searchView; //搜索框
+    private LayoutInflater inflater; //如果需要从弹框中获取用户输入数据，则需要使用inflater，否则会报NullPointer的错
+    private AlertDialog.Builder addDialog; //弹框一：增加记录的弹框
+    private AlertDialog.Builder updateDialog; //弹框二：修改记录的弹框
+    private AlertDialog.Builder showEncryptedDialog; //弹框三：显示加密信息的弹框
+    private AlertDialog.Builder longClickMenu; //长按某一项记录的弹框
+    private AlertDialog.Builder deleteEnsureMenu; //提示是否确认删除的弹框
+    private AlertDialog.Builder resetEnsureMenu; //提示是否确认清空所有数据的弹框
+    private AlertDialog.Builder updateEncryptorDialog; //修改入口密码的弹框
+    private AlertDialog.Builder aboutDialog; //关于的弹框
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +95,7 @@ public class MainActivity extends AppCompatActivity
         searchView = findViewById(R.id.main_search);
 
 
-        //初始化三个弹框
+        //初始化弹框
         inflater = LayoutInflater.from(MainActivity.this);
         final View addDialogView = inflater.inflate(R.layout.dialog_add_record, null);
         initAddAlertDialog(addDialogView);
@@ -100,6 +103,9 @@ public class MainActivity extends AppCompatActivity
         initUpdateAlertDialog(updateDialogView);
         final View showEncryptedDialogView = inflater.inflate(R.layout.dialog_show_encrypted_record, null);
         initShowEncryptedAlertDialog(showEncryptedDialogView);
+//        final View updateEncryptorView = inflater.inflate(R.layout.dialog_update_encryptor, null);
+//        initUpdateEncryptorDialog(updateEncryptorView);
+        initAboutDialog();
 
 
         //侧边栏
@@ -206,7 +212,8 @@ public class MainActivity extends AppCompatActivity
                                     if(deleteRecordToDB(index)){
                                         Global.records = sqLiteHelper.queryRecord(db, null);
                                         flushAllItemList();
-                                        flushSearchItemList(searchQuery);
+                                        if(isSearching)
+                                            flushSearchItemList(searchQuery);
                                     }
                                 }
                             });
@@ -309,10 +316,32 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if(id == R.id.nav_update_encryptor){
-
+            final View updateEncryptorView = inflater.inflate(R.layout.dialog_update_encryptor, null);
+            initUpdateEncryptorDialog(updateEncryptorView);
+            ViewGroup parentViewGroup = (ViewGroup) updateEncryptorView.getParent();
+            if(parentViewGroup != null)
+                parentViewGroup.removeView(updateEncryptorView);
+            updateEncryptorDialog.show();
         }
         else if(id == R.id.nav_clear_all){
-
+            resetEnsureMenu = new AlertDialog.Builder(MainActivity.this);
+            resetEnsureMenu.setTitle("警告！是否确认清空所有数据？");
+            resetEnsureMenu.setMessage("确认之后所有数据都将被删除，包括入口密码！\n应用将会关闭，请手动重启。");
+            resetEnsureMenu.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //删除数据库中所有记录数据
+                    for(int i = 0; i < Global.records.size(); i++)
+                        deleteRecordToDB(i);
+                    sqLiteHelper.deleteEncryptor(db);
+                    ActivityManager.exit();
+                }
+            });
+            resetEnsureMenu.setNegativeButton("取消", null);
+            resetEnsureMenu.show();
+        }
+        else if(id == R.id.nav_about){
+            aboutDialog.show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -454,6 +483,77 @@ public class MainActivity extends AppCompatActivity
         showEncryptedDialog.setTitle("修改记录");
         showEncryptedDialog.setView(showEncryptedDialogView);
         showEncryptedDialog.setPositiveButton("确定", null);
+    }
+
+    private void initUpdateEncryptorDialog(final View updateEncryptorView){
+        updateEncryptorDialog = new AlertDialog.Builder(MainActivity.this);
+        updateEncryptorDialog.setTitle("修改入口密码");
+        updateEncryptorDialog.setView(updateEncryptorView);
+        updateEncryptorDialog.setNegativeButton("取消", null);
+        updateEncryptorDialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                EditText etPwd1 = updateEncryptorView.findViewById(R.id.update_encryptor_1),
+                        etPwd2 = updateEncryptorView.findViewById(R.id.update_encryptor_2);
+                String pwd1 = etPwd1.getText().toString(),
+                        pwd2 = etPwd2.getText().toString();
+
+                String msg = "";
+                if(pwd1.equals(""))
+                    msg = "请输入密码";
+                else if(pwd2.equals(""))
+                    msg = "请重复输入密码";
+                else if(!Pattern.matches("^[A-Za-z0-9~!@#$%^&*()_]{4,20}$", pwd1))
+                    msg = "密码格式错误";
+                else if(!pwd1.equals(pwd2))
+                    msg = "两次输入的密码不一致";
+
+                if(!msg.equals(""))
+                    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                else{
+                    //先全部解密出来，再用新的密码重新加密一遍，然后插入数据库
+                    List<Record> tempRecords = Global.records;
+                    for(int i = 0; i < tempRecords.size(); i++){
+                        tempRecords.get(i).setAccountNum(AES128ECBPKCS5.decryptString(tempRecords.get(i).getAccountNum()));
+                        tempRecords.get(i).setAccountPwd(AES128ECBPKCS5.decryptString(tempRecords.get(i).getAccountPwd()));
+                        tempRecords.get(i).setNick(AES128ECBPKCS5.decryptString(tempRecords.get(i).getNick()));
+                        tempRecords.get(i).setEmail(AES128ECBPKCS5.decryptString(tempRecords.get(i).getEmail()));
+                        tempRecords.get(i).setPhone(AES128ECBPKCS5.decryptString(tempRecords.get(i).getPhone()));
+                        tempRecords.get(i).setUrl(AES128ECBPKCS5.decryptString(tempRecords.get(i).getUrl()));
+                        tempRecords.get(i).setSecurityProblem(AES128ECBPKCS5.decryptString(tempRecords.get(i).getSecurityProblem()));
+                        tempRecords.get(i).setSecurityAnswer(AES128ECBPKCS5.decryptString(tempRecords.get(i).getSecurityAnswer()));
+                        tempRecords.get(i).setNote(AES128ECBPKCS5.decryptString(tempRecords.get(i).getNote()));
+                    }
+                    AES128ECBPKCS5.setSecretKey(pwd1);
+                    for(int i = 0; i < tempRecords.size(); i++){
+                        tempRecords.get(i).setAccountNum(AES128ECBPKCS5.encryptString(tempRecords.get(i).getAccountNum()));
+                        tempRecords.get(i).setAccountPwd(AES128ECBPKCS5.encryptString(tempRecords.get(i).getAccountPwd()));
+                        tempRecords.get(i).setNick(AES128ECBPKCS5.encryptString(tempRecords.get(i).getNick()));
+                        tempRecords.get(i).setEmail(AES128ECBPKCS5.encryptString(tempRecords.get(i).getEmail()));
+                        tempRecords.get(i).setPhone(AES128ECBPKCS5.encryptString(tempRecords.get(i).getPhone()));
+                        tempRecords.get(i).setUrl(AES128ECBPKCS5.encryptString(tempRecords.get(i).getUrl()));
+                        tempRecords.get(i).setSecurityProblem(AES128ECBPKCS5.encryptString(tempRecords.get(i).getSecurityProblem()));
+                        tempRecords.get(i).setSecurityAnswer(AES128ECBPKCS5.encryptString(tempRecords.get(i).getSecurityAnswer()));
+                        tempRecords.get(i).setNote(AES128ECBPKCS5.encryptString(tempRecords.get(i).getNote()));
+                    }
+
+                    sqLiteHelper.replaceEncryptor(db, new Encryptor(MD5Hash.stringToMd5LowerCase(pwd1)));
+                    for(int i = 0; i < tempRecords.size(); i++)
+                        sqLiteHelper.updateRecord(db, tempRecords.get(i));
+                    flushAllItemList();
+                    if(isSearching)
+                        flushSearchItemList(searchQuery);
+                }
+
+            }
+        });
+    }
+
+    private void initAboutDialog(){
+        aboutDialog = new AlertDialog.Builder(MainActivity.this);
+        aboutDialog.setTitle("关于");
+        aboutDialog.setView(R.layout.dialog_about);
+        aboutDialog.setPositiveButton("确定", null);
     }
 
     //向数据库中添加Record记录

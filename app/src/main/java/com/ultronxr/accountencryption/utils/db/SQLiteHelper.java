@@ -5,13 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Environment;
 
 
-import com.ultronxr.accountencryption.utils.MD5Hash;
 import com.ultronxr.accountencryption.utils.db.bean.Encryptor;
 import com.ultronxr.accountencryption.utils.db.bean.Record;
-import com.ultronxr.accountencryption.utils.encrypt.AES128ECBPKCS5;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -73,6 +70,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     private ContentValues setEncryptorToContentValues(Encryptor encryptor){
         ContentValues contentValues = new ContentValues();
+        contentValues.put("id", 1);
         contentValues.put("pwd", encryptor.getPwd());
         contentValues.put("lastModifyTime", new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         return contentValues;
@@ -98,6 +96,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void replaceEncryptor(SQLiteDatabase db, Encryptor encryptor){
         ContentValues contentValues = setEncryptorToContentValues(encryptor);
         db.replace("encryptor", null, contentValues);
+    }
+
+    public void deleteEncryptor(SQLiteDatabase db){
+        db.delete("encryptor", "id=?", new String[]{"1"});
     }
 
     public String queryEncryptor(SQLiteDatabase db){

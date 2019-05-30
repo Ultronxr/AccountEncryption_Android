@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Global {
 
-    public static String encryptor;
+    //public static String encryptor;
 
     public static List<Record> records;
 

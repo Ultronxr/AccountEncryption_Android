@@ -41,7 +41,7 @@ public class AES128ECBPKCS5 {
      * @return 加密后的结果，以字符串返回
      */
     public static String encryptString(String strToEncrypt){
-
+        if(strToEncrypt.equals("")) return "";
         try{ return Base64.getEncoder().encodeToString(cipherForEncrypt.doFinal(strToEncrypt.getBytes("UTF-8"))); }
         catch(Exception e) { e.printStackTrace(); }
         return "";
@@ -66,7 +66,7 @@ public class AES128ECBPKCS5 {
      * @return 解密后的结果，以字符串返回
      */
     public static String decryptString(String strToDecrypt){
-
+        if(strToDecrypt.equals("")) return "";
         try{ return new String(cipherForDecrypt.doFinal(Base64.getDecoder().decode(strToDecrypt))); }
         catch (Exception e) { e.printStackTrace(); }
         return "";

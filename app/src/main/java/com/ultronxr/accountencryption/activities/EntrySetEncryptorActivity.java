@@ -9,13 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ultronxr.accountencryption.R;
 import com.ultronxr.accountencryption.activitymanager.ActivityManager;
-import com.ultronxr.accountencryption.global.Global;
-import com.ultronxr.accountencryption.utils.MD5Hash;
+import com.ultronxr.accountencryption.utils.encrypt.MD5Hash;
 import com.ultronxr.accountencryption.utils.db.SQLiteHelper;
 import com.ultronxr.accountencryption.utils.db.bean.Encryptor;
 import com.ultronxr.accountencryption.utils.encrypt.AES128ECBPKCS5;
@@ -58,7 +56,7 @@ public class EntrySetEncryptorActivity extends AppCompatActivity {
                     Toast.makeText(EntrySetEncryptorActivity.this, msg, Toast.LENGTH_SHORT).show();
                 else{
                     sqLiteHelper.replaceEncryptor(db, new Encryptor(MD5Hash.stringToMd5LowerCase(pwd1)));
-                    Global.encryptor = pwd1;
+                    //Global.encryptor = pwd1;
                     AES128ECBPKCS5.setSecretKey(pwd1);
                     Intent mainIntent = new Intent(EntrySetEncryptorActivity.this, MainActivity.class);
                     startActivity(mainIntent);

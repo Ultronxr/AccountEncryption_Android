@@ -14,8 +14,12 @@
             android:icon="@android:drawable/ic_menu_delete"
             android:title="清空数据" />
 
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@android:drawable/ic_dialog_info"
+            android:title="关于" />
+
     </group>
-    <group />
 
 
 </menu>

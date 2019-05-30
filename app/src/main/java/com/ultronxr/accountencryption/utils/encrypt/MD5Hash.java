@@ -1,4 +1,4 @@
-package com.ultronxr.accountencryption.utils;
+package com.ultronxr.accountencryption.utils.encrypt;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
