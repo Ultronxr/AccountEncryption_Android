@@ -28,7 +28,7 @@
             <TextView
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
-                android:text="AccountEncryption\n账号信息加密存储软件"
+                android:text="AccountEncryption\n本地账号信息加密存储APP"
                 android:textAlignment="center"
                 android:textStyle="bold"
                 tools:layout_editor_absoluteX="102dp"
@@ -45,7 +45,7 @@
             <TextView
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
-                android:text="本APP由-Ultronxr-开发\n"
+                android:text="本APP由-Ultronxr-开发\n© 20190530\n"
                 android:textAlignment="center"
                 tools:layout_editor_absoluteX="102dp"
                 tools:layout_editor_absoluteY="76dp" />
