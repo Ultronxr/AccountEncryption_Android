@@ -45,6 +45,14 @@
             <TextView
                 android:layout_width="280dp"
                 android:layout_height="wrap_content"
+                android:text="入口密码使用MD5Hash加密，账号记录信息使用AES128ECBPKCS5加密\n"
+                android:textAlignment="center"
+                tools:layout_editor_absoluteX="102dp"
+                tools:layout_editor_absoluteY="76dp" />
+
+            <TextView
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
                 android:text="本APP由-Ultronxr-开发\n© 20190530\n"
                 android:textAlignment="center"
                 tools:layout_editor_absoluteX="102dp"

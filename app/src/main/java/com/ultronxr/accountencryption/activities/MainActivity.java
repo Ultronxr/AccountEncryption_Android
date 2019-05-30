@@ -480,7 +480,7 @@ public class MainActivity extends AppCompatActivity
     //初始化弹框三：显示加密信息的弹框
     private void initShowEncryptedAlertDialog(final View showEncryptedDialogView){
         showEncryptedDialog = new AlertDialog.Builder(MainActivity.this);
-        showEncryptedDialog.setTitle("修改记录");
+        showEncryptedDialog.setTitle("数据库中加密的原始数据");
         showEncryptedDialog.setView(showEncryptedDialogView);
         showEncryptedDialog.setPositiveButton("确定", null);
     }
