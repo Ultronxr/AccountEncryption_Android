@@ -6,7 +6,7 @@ Android_9.0  Version_1.0
 
 入口密码使用MD5Hash加密，账号记录信息使用AES128ECBPKCS5加密
 
-本APP由-Ultronxr-开发
+本APP由-Ultronxr-开发 MIT开源
 
 © 20190530
 
@@ -15,18 +15,20 @@ Android_9.0  Version_1.0
 
 # APP截图
 
-![第一次进入APP](./show/FirstEntry.png)
+<img src="./show/FirstEntry.png"  height="600px" width="300px"><br/>
 
-![进入APP](./show/Entry.png)
+<img src="./show/Entry.png"  height="600px" width="300px"><br/>
 
-![主界面](./show/MainActivity.png)
+<img src="./show/MainActivity.png"  height="600px" width="300px"><br/>
 
-![主界面侧边栏](./show/NavBar.png)
+<img src="./show/NavBar.png"  height="600px" width="300px"><br/>
 
-![添加记录](./show/AddRecord.png)
+<img src="./show/AddRecord.png"  height="600px" width="300px"><br/>
 
-![查看或修改记录](./show/UpdateRecord.png)
+<img src="./show/UpdateRecord.png"  height="600px" width="300px"><br/>
 
-![查看数据库中加密的原数据](./show/SowEncryptedReocrd.png)
+<img src="./show/SowEncryptedReocrd.png"  height="600px" width="300px"><br/>
 
-![长按某一条记录](./show/LongClick.png)
+<img src="./show/LongClick.png"  height="600px" width="300px"><br/>
+
+
