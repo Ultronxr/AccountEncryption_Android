@@ -56,8 +56,8 @@ public class EntryActivity extends AppCompatActivity {
         sqLiteHelper = new SQLiteHelper(getApplicationContext());
         db = sqLiteHelper.getWritableDatabase();
 
-        Global.encryptor = sqLiteHelper.queryEncryptor(db);
-        //Log.v("数据库中的密码：", Global.encryptor);
+        final String tempEncryptor = sqLiteHelper.queryEncryptor(db);
+        //Log.v("数据库中的密码：", tempEncryptor);
 
         etPwd1 = findViewById(R.id.pwd1);
         Button btOk = findViewById(R.id.btOK), btCancel = findViewById(R.id.btCancel);
@@ -72,13 +72,14 @@ public class EntryActivity extends AppCompatActivity {
                     msg = "请输入密码";
                 else if(!Pattern.matches("^[A-Za-z0-9~!@#$%^&*()_]{4,20}$", pwd1))
                     msg = "密码格式错误";
-                else if(!Global.encryptor.equals(MD5Hash.stringToMd5LowerCase(pwd1)))
+                else if(!tempEncryptor.equals(MD5Hash.stringToMd5LowerCase(pwd1)))
                     msg = "密码错误";
 
                 if(!msg.equals(""))
                     Toast.makeText(EntryActivity.this, msg, Toast.LENGTH_SHORT).show();
                 else {
-                    AES128ECBPKCS5.setSecretKey(Global.encryptor);
+                    Global.encryptor = pwd1;
+                    AES128ECBPKCS5.setSecretKey(pwd1);
                     Intent mainIntent = new Intent(EntryActivity.this, MainActivity.class);
                     startActivity(mainIntent);
                 }
@@ -91,7 +92,7 @@ public class EntryActivity extends AppCompatActivity {
             }
         });
 
-        if(Global.encryptor.equals(""))
+        if(tempEncryptor.equals(""))
             startActivity(new Intent(EntryActivity.this, EntrySetEncryptorActivity.class));
     }
 

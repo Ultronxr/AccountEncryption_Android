@@ -58,8 +58,8 @@ public class EntrySetEncryptorActivity extends AppCompatActivity {
                     Toast.makeText(EntrySetEncryptorActivity.this, msg, Toast.LENGTH_SHORT).show();
                 else{
                     sqLiteHelper.replaceEncryptor(db, new Encryptor(MD5Hash.stringToMd5LowerCase(pwd1)));
-                    Global.encryptor = MD5Hash.stringToMd5LowerCase(pwd1);
-                    AES128ECBPKCS5.setSecretKey(Global.encryptor);
+                    Global.encryptor = pwd1;
+                    AES128ECBPKCS5.setSecretKey(pwd1);
                     Intent mainIntent = new Intent(EntrySetEncryptorActivity.this, MainActivity.class);
                     startActivity(mainIntent);
                 }

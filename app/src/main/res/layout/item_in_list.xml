@@ -25,7 +25,7 @@
     <TextView
         android:id="@+id/item_category"
         android:layout_width="wrap_content"
-        android:layout_height="20dp"
+        android:layout_height="26dp"
         android:layout_alignParentRight="true"
         android:layout_marginTop="25dp"
         android:layout_marginRight="20dp"

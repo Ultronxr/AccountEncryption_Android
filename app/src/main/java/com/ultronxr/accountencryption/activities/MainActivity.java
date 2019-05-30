@@ -2,6 +2,7 @@ package com.ultronxr.accountencryption.activities;
 
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -229,6 +230,7 @@ public class MainActivity extends AppCompatActivity
 
         //搜索栏监听事件
         searchView.setIconifiedByDefault(false);
+        //TODO 清除搜索栏下划线
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
